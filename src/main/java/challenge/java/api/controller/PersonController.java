@@ -1,5 +1,7 @@
 package challenge.java.api.controller;
 
+import challenge.java.api.address.Address;
+import challenge.java.api.address.AddressRepository;
 import challenge.java.api.person.Person;
 import challenge.java.api.person.PersonDto;
 import challenge.java.api.person.PersonRespository;
@@ -19,9 +21,15 @@ public class PersonController {
     @Autowired
     private PersonRespository repository;
 
+    @Autowired
+    private AddressRepository addressRepository;
+
     @PostMapping
     @Transactional
     public void register(@RequestBody PersonDto data) throws ParseException {
-        repository.save(new Person(data));
+        Person person = new Person(data);
+        repository.save(person);
+        addressRepository.save(new Address(data.address(), person));
+
     }
 }

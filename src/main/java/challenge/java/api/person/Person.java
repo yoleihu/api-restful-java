@@ -28,12 +28,9 @@ public class Person {
     private String name;
     private Date dateBirth;
 
-    @OneToMany(cascade = {CascadeType.ALL})
-    private List<Address> address;
 
     public Person(PersonDto data) throws ParseException {
         this.name = data.name();
         this.dateBirth = new SimpleDateFormat("dd/MM/yyyy").parse(data.dateBirth());
-        this.address = List.of(new Address(data.address()));
     }
 }

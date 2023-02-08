@@ -34,5 +34,13 @@ public class Address {
         this.number = data.number();
         this.person = data.person();
     }
+
+    public Address(AddressDto address, Person person) {
+        this.street = address.street();
+        this.zip = address.zip();
+        this.city = address.city();
+        this.number = address.number();
+        this.person = person;
+    }
 }
 
