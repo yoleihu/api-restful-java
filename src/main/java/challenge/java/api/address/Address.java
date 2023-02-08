@@ -24,14 +24,15 @@ public class Address {
     private String city;
     private String number;
 
-    private Long personid;
+    @ManyToOne
+    private Person person;
 
     public Address(AddressDto data) {
         this.street = data.street();
         this.zip = data.zip();
         this.city = data.city();
         this.number = data.number();
-        this.personid = data.personid();
+        this.person = data.person();
     }
 }
 

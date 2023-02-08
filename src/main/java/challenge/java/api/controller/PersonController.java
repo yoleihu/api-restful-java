@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
+
 @RestController
 @RequestMapping("person")
 public class PersonController {
@@ -19,7 +21,7 @@ public class PersonController {
 
     @PostMapping
     @Transactional
-    public void register(@RequestBody PersonDto data) {
+    public void register(@RequestBody PersonDto data) throws ParseException {
         repository.save(new Person(data));
     }
 }

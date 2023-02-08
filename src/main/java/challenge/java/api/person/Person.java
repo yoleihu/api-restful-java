@@ -7,6 +7,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -25,12 +28,12 @@ public class Person {
     private String name;
     private Date dateBirth;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<Address> address;
 
-    public Person(PersonDto data) {
+    public Person(PersonDto data) throws ParseException {
         this.name = data.name();
-        this.dateBirth = data.dateBirth();
-        this.address.add(new Address(data.address()));
+        this.dateBirth = new SimpleDateFormat("dd/MM/yyyy").parse(data.dateBirth());
+        this.address = List.of(new Address(data.address()));
     }
 }
