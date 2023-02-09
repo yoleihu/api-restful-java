@@ -1,9 +1,7 @@
-package challenge.java.api.person;
+package challenge.java.api.dto;
 
-import challenge.java.api.address.AddressDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 public record PersonDto(
         @NotBlank

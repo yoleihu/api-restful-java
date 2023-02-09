@@ -1,7 +1,8 @@
-package challenge.java.api.address;
+package challenge.java.api.model;
 
 
-import challenge.java.api.person.Person;
+import challenge.java.api.dto.AddressDto;
+import challenge.java.api.model.Person;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

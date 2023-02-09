@@ -1,6 +1,5 @@
-package challenge.java.api.address;
+package challenge.java.api.dto;
 
-import challenge.java.api.person.Person;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 

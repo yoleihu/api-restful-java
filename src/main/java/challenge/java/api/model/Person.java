@@ -1,6 +1,6 @@
-package challenge.java.api.person;
+package challenge.java.api.model;
 
-import challenge.java.api.address.Address;
+import challenge.java.api.dto.PersonDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 @Table(name = "persons")
 @Entity(name = "Person")
