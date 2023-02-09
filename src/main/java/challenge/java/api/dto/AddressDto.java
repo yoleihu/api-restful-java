@@ -1,6 +1,7 @@
 package challenge.java.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record AddressDto(
@@ -13,6 +14,9 @@ public record AddressDto(
         String city,
         @NotBlank
         String number,
+
+        @NotNull
+        boolean mainAddress,
 
         Long personId) {
 }

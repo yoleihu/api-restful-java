@@ -2,16 +2,16 @@ package challenge.java.api.model;
 
 
 import challenge.java.api.dto.AddressDto;
-import challenge.java.api.model.Person;
+import challenge.java.api.service.AddressService;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.Optional;
 
 @Table(name = "address")
 @Entity(name = "Address")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -25,6 +25,8 @@ public class Address {
     private String city;
     private String number;
 
+    private Boolean mainAddress;
+
     @ManyToOne
     private Person person;
 
@@ -33,6 +35,7 @@ public class Address {
         this.zip = data.zip();
         this.city = data.city();
         this.number = data.number();
+        this.mainAddress = data.mainAddress();
         this.person = person;
     }
 }

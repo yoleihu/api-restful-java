@@ -16,6 +16,7 @@ create table address(
     zip varchar(9) not null,
     number varchar(20) not null,
     city varchar(255) not null,
+    main_address boolean,
     person_id bigint not null,
 
     primary key(id),

@@ -7,11 +7,14 @@ import challenge.java.api.model.Person;
 import challenge.java.api.repository.PersonRespository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("address")
@@ -24,8 +27,14 @@ public class AddressController {
 
     @PostMapping
     @Transactional
-    public void register(@RequestBody @Valid AddressDto data) {
-        Person person = personRespository.findById(data.personId()).orElseThrow(RuntimeException::new);
-        repository.save(new Address(data, person));
+    public HttpStatus register(@RequestBody @Valid AddressDto data) throws Exception {
+        try{
+            Person person = personRespository.findById(data.personId()).orElseThrow(RuntimeException::new);
+            repository.save(new Address(data, person));
+            return HttpStatus.CREATED;
+        }
+        catch (Exception e) {
+            throw new Exception(e);
+        }
     }
 }
