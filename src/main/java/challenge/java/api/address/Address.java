@@ -27,19 +27,11 @@ public class Address {
     @ManyToOne
     private Person person;
 
-    public Address(AddressDto data) {
+    public Address(AddressDto data, Person person) {
         this.street = data.street();
         this.zip = data.zip();
         this.city = data.city();
         this.number = data.number();
-        this.person = data.person();
-    }
-
-    public Address(AddressDto address, Person person) {
-        this.street = address.street();
-        this.zip = address.zip();
-        this.city = address.city();
-        this.number = address.number();
         this.person = person;
     }
 }

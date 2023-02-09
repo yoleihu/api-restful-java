@@ -5,6 +5,7 @@ import challenge.java.api.address.AddressRepository;
 import challenge.java.api.person.Person;
 import challenge.java.api.person.PersonDto;
 import challenge.java.api.person.PersonRespository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,10 +27,9 @@ public class PersonController {
 
     @PostMapping
     @Transactional
-    public void register(@RequestBody PersonDto data) throws ParseException {
+    public void register(@RequestBody @Valid PersonDto data) throws ParseException {
         Person person = new Person(data);
         repository.save(person);
         addressRepository.save(new Address(data.address(), person));
-
     }
 }
