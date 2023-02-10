@@ -1,5 +1,6 @@
 package challenge.java.api.controller;
 
+import challenge.java.api.dto.AddressListDto;
 import challenge.java.api.model.Address;
 import challenge.java.api.dto.AddressDto;
 import challenge.java.api.repository.AddressRepository;
@@ -9,11 +10,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -45,5 +44,10 @@ public class AddressController {
         catch (Exception e) {
             throw new Exception(e);
         }
+    }
+
+    @GetMapping("/{id}")
+    public List<AddressListDto> findById(@PathVariable Long id) {
+        return repository.findAllByPerson(personRespository.findById(id).get()).stream().map(AddressListDto::new).toList();
     }
 }
