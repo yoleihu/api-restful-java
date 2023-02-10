@@ -1,5 +1,6 @@
 package challenge.java.api.controller;
 
+import challenge.java.api.dto.UpdatePersonDto;
 import challenge.java.api.model.Address;
 import challenge.java.api.repository.AddressRepository;
 import challenge.java.api.model.Person;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,5 +51,13 @@ public class PersonController {
     @GetMapping("/{id}")
     public Optional<Person> findById(@PathVariable Long id) {
         return repository.findById(id);
+    }
+
+    @PutMapping
+    @Transactional
+    public void update(@RequestBody @Valid UpdatePersonDto data) throws ParseException {
+        Optional<Person> person = repository.findById(data.id());
+        person.get().update(data);
+
     }
 }

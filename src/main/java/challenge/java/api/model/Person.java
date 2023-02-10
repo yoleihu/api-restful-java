@@ -1,6 +1,7 @@
 package challenge.java.api.model;
 
 import challenge.java.api.dto.PersonDto;
+import challenge.java.api.dto.UpdatePersonDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -30,5 +31,15 @@ public class Person {
     public Person(PersonDto data) throws ParseException {
         this.name = data.name();
         this.dateBirth = new SimpleDateFormat("dd/MM/yyyy").parse(data.dateBirth());
+    }
+
+    public void update(UpdatePersonDto data) throws ParseException {
+        if(data.name() != null){
+            this.name = data.name();
+        }
+
+        if(data.dateBirth() != null){
+            this.dateBirth = new SimpleDateFormat("dd/MM/yyyy").parse(data.dateBirth());
+        }
     }
 }
