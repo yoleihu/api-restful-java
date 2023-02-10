@@ -47,7 +47,13 @@ public class AddressController {
     }
 
     @GetMapping("/{id}")
-    public List<AddressListDto> findById(@PathVariable Long id) {
-        return repository.findAllByPerson(personRespository.findById(id).get()).stream().map(AddressListDto::new).toList();
+    public List<AddressListDto> findById(@PathVariable Long id) throws Exception {
+        try{
+            return repository.findAllByPerson(personRespository.findById(id).get()).
+                    stream().map(AddressListDto::new).toList();
+        }catch (Exception e){
+            throw new Exception(e);
+        }
+
     }
 }
