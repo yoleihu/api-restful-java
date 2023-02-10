@@ -13,8 +13,6 @@ Sempre implemento os princípios de Clean Code e Design Patterns, além disso de
 
 ## Requisitos:
 
-Esse projeto é capaz de:
-
 - [x]  Criar uma pessoa
 - [x]  Editar uma pessoa
 - [x]  Consultar uma pessoa
