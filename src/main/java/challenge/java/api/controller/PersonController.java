@@ -6,15 +6,14 @@ import challenge.java.api.model.Person;
 import challenge.java.api.dto.PersonDto;
 import challenge.java.api.repository.PersonRespository;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
+import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -40,5 +39,15 @@ public class PersonController {
         catch (Exception e) {
             throw new Exception(e);
         }
+    }
+
+    @GetMapping
+    public List<Person> list() {
+        return repository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Person> findById(@PathVariable Long id) {
+        return repository.findById(id);
     }
 }
