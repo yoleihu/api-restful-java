@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
+
+import static org.springframework.http.HttpStatus.*;
+
 @RestController
 @RequestMapping("person")
 public class PersonController {
@@ -31,7 +35,7 @@ public class PersonController {
             Person person = new Person(data);
             repository.save(person);
             addressRepository.save(new Address(data.address(), person));
-            return HttpStatus.CREATED;
+            return CREATED;
         }
         catch (Exception e) {
             throw new Exception(e);

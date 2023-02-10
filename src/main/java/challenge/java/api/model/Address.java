@@ -2,11 +2,8 @@ package challenge.java.api.model;
 
 
 import challenge.java.api.dto.AddressDto;
-import challenge.java.api.service.AddressService;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Optional;
 
 @Table(name = "address")
 @Entity(name = "Address")

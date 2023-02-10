@@ -30,6 +30,15 @@ public class AddressController {
     public HttpStatus register(@RequestBody @Valid AddressDto data) throws Exception {
         try{
             Person person = personRespository.findById(data.personId()).orElseThrow(RuntimeException::new);
+            if ( data.mainAddress() == true ){
+                Optional<Address> main = repository.findAllByPerson(person)
+                        .stream().filter(a -> a.getMainAddress().equals(true)).findFirst();
+
+                if(main.isPresent()){
+                    main.get().setMainAddress(false);
+                    repository.save(main.get());
+                }
+            }
             repository.save(new Address(data, person));
             return HttpStatus.CREATED;
         }
