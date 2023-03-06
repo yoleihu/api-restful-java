@@ -60,4 +60,12 @@ public class PersonController {
         person.get().update(data);
 
     }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void delete(@PathVariable Long id) {
+        List<Address> adresses= addressRepository.findAllByPerson(repository.findById(id));
+        adresses.forEach(adress -> addressRepository.deleteById(adress.getId()));
+        repository.deleteById(id);
+    }
 }
