@@ -33,7 +33,7 @@ public class Person {
         this.dateBirth = new SimpleDateFormat("dd/MM/yyyy").parse(data.dateBirth());
     }
 
-    public void update(UpdatePersonDto data) throws ParseException {
+    public Person update(UpdatePersonDto data) throws ParseException {
         if(data.name() != null){
             this.name = data.name();
         }
@@ -41,5 +41,7 @@ public class Person {
         if(data.dateBirth() != null){
             this.dateBirth = new SimpleDateFormat("dd/MM/yyyy").parse(data.dateBirth());
         }
+
+        return this;
     }
 }

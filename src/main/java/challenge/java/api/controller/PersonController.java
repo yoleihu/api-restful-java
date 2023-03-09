@@ -7,9 +7,11 @@ import challenge.java.api.model.Person;
 import challenge.java.api.dto.PersonDto;
 import challenge.java.api.repository.PersonRespository;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,28 +46,33 @@ public class PersonController {
     }
 
     @GetMapping
-    public List<Person> list() {
-        return repository.findAll();
+    public ResponseEntity<Page<Person>> list(Pageable pagination) {
+        var page = repository.findAll(pagination);
+        return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{id}")
-    public Optional<Person> findById(@PathVariable Long id) {
-        return repository.findById(id);
+    public ResponseEntity<Optional<Person>> findById(@PathVariable Long id) {
+        var person = repository.findById(id);
+        return ResponseEntity.ok(person);
     }
 
     @PutMapping
     @Transactional
-    public void update(@RequestBody @Valid UpdatePersonDto data) throws ParseException {
+    public ResponseEntity update(@RequestBody @Valid UpdatePersonDto data) throws ParseException {
         Optional<Person> person = repository.findById(data.id());
         person.get().update(data);
 
+        return ResponseEntity.ok(new UpdatePersonDto(person.get().getId(), person.get().getName(), person.get().getDateBirth().toString()));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity delete(@PathVariable Long id) {
         List<Address> adresses= addressRepository.findAllByPerson(repository.findById(id));
         adresses.forEach(adress -> addressRepository.deleteById(adress.getId()));
         repository.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
