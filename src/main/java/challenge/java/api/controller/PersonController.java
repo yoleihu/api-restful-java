@@ -1,5 +1,6 @@
 package challenge.java.api.controller;
 
+import challenge.java.api.dto.AddressDto;
 import challenge.java.api.dto.UpdatePersonDto;
 import challenge.java.api.model.Address;
 import challenge.java.api.repository.AddressRepository;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.text.ParseException;
 import java.util.List;
@@ -33,12 +35,18 @@ public class PersonController {
 
     @PostMapping
     @Transactional
-    public  HttpStatus create(@RequestBody @Valid PersonDto data) throws Exception {
+    public ResponseEntity create(@RequestBody @Valid PersonDto data, UriComponentsBuilder uriBuilder) throws Exception {
         try{
             Person person = new Person(data);
             repository.save(person);
-            addressRepository.save(new Address(data.address(), person));
-            return CREATED;
+            Address address = new Address(data.address(), person);
+            addressRepository.save(address);
+
+            var uri = uriBuilder.path("/person/{id}").buildAndExpand(person.getId()).toUri();
+
+            return ResponseEntity.created(uri).body(
+                    new PersonDto(person.getName(), person.getDateBirth().toString(),
+                    new AddressDto(address.getStreet(), address.getZip(), address.getCity(), address.getNumber(), address.getMainAddress(), address.getPerson().getId())));
         }
         catch (Exception e) {
             throw new Exception(e);
