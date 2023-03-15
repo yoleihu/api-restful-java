@@ -1,17 +1,14 @@
 package challenge.java.api.controller;
 
-import challenge.java.api.dto.AddressDto;
-import challenge.java.api.dto.UpdatePersonDto;
+import challenge.java.api.dto.*;
 import challenge.java.api.model.Address;
 import challenge.java.api.repository.AddressRepository;
 import challenge.java.api.model.Person;
-import challenge.java.api.dto.PersonDto;
 import challenge.java.api.repository.PersonRespository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +17,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
-
-import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("person")
@@ -60,9 +55,10 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Person>> findById(@PathVariable Long id) {
+    public ResponseEntity<PersonDetailsDto> findById(@PathVariable Long id) {
         var person = repository.findById(id);
-        return ResponseEntity.ok(person);
+        var address = addressRepository.findAllByPerson(person.get());
+        return ResponseEntity.ok(new PersonDetailsDto(person.get().getName(), person.get().getDateBirth().toString(), address.stream().map(AddressListDto::new).toList()));
     }
 
     @PutMapping
@@ -77,8 +73,8 @@ public class PersonController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity delete(@PathVariable Long id) {
-        List<Address> adresses= addressRepository.findAllByPerson(repository.findById(id));
-        adresses.forEach(adress -> addressRepository.deleteById(adress.getId()));
+        List<Address> addresses= addressRepository.findAllByPerson(repository.findById(id));
+        addresses.forEach(adress -> addressRepository.deleteById(adress.getId()));
         repository.deleteById(id);
 
         return ResponseEntity.noContent().build();
