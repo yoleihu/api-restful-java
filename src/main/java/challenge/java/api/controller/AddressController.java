@@ -1,5 +1,6 @@
 package challenge.java.api.controller;
 
+import challenge.java.api.dto.AddressDetailsDto;
 import challenge.java.api.dto.AddressListDto;
 import challenge.java.api.model.Address;
 import challenge.java.api.dto.AddressDto;
@@ -60,9 +61,9 @@ public class AddressController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Address> findById(@PathVariable Long id) {
+    public ResponseEntity<AddressDetailsDto> findById(@PathVariable Long id) {
         var address = repository.getReferenceById(id);
-        return ResponseEntity.ok(address);
+        return ResponseEntity.ok(new AddressDetailsDto(address));
     }
 
     @DeleteMapping("/{id}")
