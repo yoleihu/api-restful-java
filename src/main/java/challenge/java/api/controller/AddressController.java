@@ -1,7 +1,6 @@
 package challenge.java.api.controller;
 
 import challenge.java.api.dto.AddressListDto;
-import challenge.java.api.dto.PersonDto;
 import challenge.java.api.model.Address;
 import challenge.java.api.dto.AddressDto;
 import challenge.java.api.repository.AddressRepository;
@@ -9,7 +8,6 @@ import challenge.java.api.model.Person;
 import challenge.java.api.repository.PersonRespository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -56,19 +54,14 @@ public class AddressController {
 
     @GetMapping("/person/{id}")
     public ResponseEntity<List<AddressListDto>> findByAllByPersonId(@PathVariable Long id) throws Exception {
-        try{
-            List<AddressListDto> addresses = repository.findAllByPerson(personRespository.findById(id).get()).
-                    stream().map(AddressListDto::new).toList();
-            return ResponseEntity.ok(addresses);
-        }catch (Exception e){
-            throw new Exception(e);
-        }
-
+        List<AddressListDto> addresses = repository.findAllByPerson(personRespository.getReferenceById(id)).
+                stream().map(AddressListDto::new).toList();
+        return ResponseEntity.ok(addresses);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Address>> findById(@PathVariable Long id) {
-        Optional<Address> address = repository.findById(id);
+    public ResponseEntity<Address> findById(@PathVariable Long id) {
+        var address = repository.getReferenceById(id);
         return ResponseEntity.ok(address);
     }
 

@@ -9,8 +9,6 @@ public record PersonDetailsDto(
         @NotBlank
         String name,
         @NotBlank
-        String dateBirth,
-        @Valid
-        List<AddressListDto> addresses) {
+        String dateBirth) {
 
 }

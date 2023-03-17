@@ -56,9 +56,8 @@ public class PersonController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PersonDetailsDto> findById(@PathVariable Long id) {
-        var person = repository.findById(id);
-        var address = addressRepository.findAllByPerson(person.get());
-        return ResponseEntity.ok(new PersonDetailsDto(person.get().getName(), person.get().getDateBirth().toString(), address.stream().map(AddressListDto::new).toList()));
+        var person = repository.getReferenceById(id);
+        return ResponseEntity.ok(new PersonDetailsDto(person.getName(), person.getDateBirth().toString()));
     }
 
     @PutMapping
@@ -73,7 +72,7 @@ public class PersonController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity delete(@PathVariable Long id) {
-        List<Address> addresses= addressRepository.findAllByPerson(repository.findById(id));
+        List<Address> addresses= addressRepository.findAllByPerson(repository.getReferenceById(id));
         addresses.forEach(adress -> addressRepository.deleteById(adress.getId()));
         repository.deleteById(id);
 
