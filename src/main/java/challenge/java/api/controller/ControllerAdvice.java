@@ -1,4 +1,4 @@
-package challenge.java.api.advice;
+package challenge.java.api.controller;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;

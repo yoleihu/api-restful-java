@@ -24,6 +24,16 @@ create table address(
 
 );
 
+create table users(
+
+    id bigint not null auto_increment,
+    login varchar(255) not null,
+    password varchar(255) not null,
+
+    primary key(id)
+
+);
+
 create table persons_address(
 
     person_id bigint not null,
