@@ -40,3 +40,5 @@ create table persons_address(
     address_id bigint not null
 
 );
+
+insert into users values (1, 'yoleihu', '$2a$10$Y50UaMFOxteibQEYLrwuHeehHYfcoafCopUazP12.rqB41bsolF5.');
