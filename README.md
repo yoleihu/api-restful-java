@@ -1,68 +1,93 @@
-Este é um projeto simples com Java 17 e Spring Boot, com o objetivo de identificar meus conhecimentos quanto às tecnologias utilizadas.
+# Desafio Java - Controle de Delivery de Restaurante
 
-## Perguntas:
-1.	Durante a implementação de uma nova funcionalidade de software solicitada, quais critérios você avalia e implementa para garantia de qualidade de software?
-    
-- Os principais critérios de software avaliados são usabilidade, confiabilidade, funcionalidade e manutenibilidade.
-Sempre implemento os princípios de Clean Code e Design Patterns, além disso dependendo da complexidade do projeto aplico a Test-driven development utilizando JUnit e  Mockito para melhorar a produtividade, garantindo que o sistema cumpra os requisitos e um código objetivo.
+Este projeto consiste na implementação de um sistema simplificado para o controle de delivery de um restaurante, utilizando Java e as seguintes tecnologias:
 
-2.	Em qual etapa da implementação você considera a qualidade de software?
-      
-- Para evitar retrabalho o correto é considerar a qualidade de software em todas as etapas do desenvolvimento, desde o planejamento e iniciação até a implantação e manutenção.
+- Código versionado em repositório Git
+- Java 17
+- Spring Boot 3
+- Banco de Dados H2 (banco em memória facilmente substituível)
+- API RESTful
+- Maven
+- OpenAPI 3.0 (Swagger)
 
+## Pré-requisitos
 
-## Requisitos:
+Certifique-se de ter as seguintes ferramentas instaladas em seu ambiente de desenvolvimento:
 
-- [x]  Criar uma pessoa
-- [x]  Editar uma pessoa
-- [x]  Consultar uma pessoa
-- [x]  Listar pessoas
-- [x]  Criar endereço para pessoa
-- [x]  Listar endereços da pessoa
-- [x]  Poder informar qual endereço é o principal da pessoa
+- Java 8: https://www.oracle.com/java/technologies/javase-jdk8-downloads.html
+- Git: https://git-scm.com/downloads
+- Maven: https://maven.apache.org/download.cgi
+- Firebird: Instale o servidor do Firebird de acordo com as instruções do seu sistema operacional.
 
-## Teste você também:
+## Configuração do Projeto
 
-**POST:** [http://localhost:8080/person](http://localhost:8080/person)
+Siga as etapas abaixo para configurar e executar a aplicação:
 
-```json
-{
-	"name":"Yolanda Ferreira de Souza",
-	"dateBirth": "10/11/2002",
-	"address":{ 
-		"street": "Antônio Hélio Bandini",
-		"zip": "13199000",
-		"number": "10",
-		"city": "Monte Mor",
-		"mainAddress": false
-	}
-}
-```
+1. Clone o repositório do projeto:
 
-**PUT**: [http://localhost:8080/person](http://localhost:8080/person)
+   ```bash
+   git clone https://github.com/seu-usuario/repo.git
+   ```
 
-```json
-{
-	"id": 1,
-	"name":"Yolanda Ferreira"
-}
-```
+2. Navegue até o diretório raiz do projeto:
 
-**GET**: [http://localhost:8080/person/1](http://localhost:8080/person/1)
+   ```bash
+   cd repo
+   ```
 
-**GET**: [http://localhost:8080/person/](http://localhost:8080/person/1)
+3. Configure o banco de dados Firebird:
 
-**POST**: [http://localhost:8080/address](http://localhost:8080/address)
+    - Crie um banco de dados Firebird vazio.
+    - Edite o arquivo `application.properties` localizado em `src/main/resources` e configure as informações de conexão com o banco de dados, como URL, usuário e senha.
 
-```json
-{
-		"street": "Sirilo Augusto de Santana",
-		"zip": "13199000",
-		"number": "70",
-		"city": "Monte Mor",
-		"mainAddress": true,
-		"personId": 1
-}
-```
+4. Execute a aplicação:
 
-**GET**: [http://localhost:8080/address/2](http://localhost:8080/address/2)
+   ```bash
+   mvn spring-boot:run
+   ```
+
+5. Acesse a documentação da API:
+
+   A documentação da API está disponível no Swagger. Acesse o seguinte URL em seu navegador:
+
+   ```
+   http://localhost:8080/swagger-ui.html
+   ```
+
+## Funcionalidades da API
+
+A API suporta as seguintes operações:
+
+### Segurança
+
+- Cadastro de usuários
+- Login com autenticação via token JWT
+
+**Observação:** Os métodos das APIs abaixo só podem ser executados por usuários autenticados.
+
+### Cliente
+
+- Cadastro de cliente
+- Alteração de cliente
+- Deleção de cliente
+- Consulta de cliente
+
+### Pedido
+
+- Cadastro de pedido
+- Alteração de pedido
+- Deleção de pedido
+- Consulta de pedido
+
+### Entrega
+
+- Cadastro de entrega
+- Alteração de entrega
+- Deleção de entrega
+- Consulta de entrega
+
+**Observação:** Tanto o pedido quanto a entrega obrigatoriamente precisam estar vinculados a um cliente.
+
+## Considerações Finais
+
+Este é um projeto de exemplo para demonstrar a implementação de um sistema simplificado de controle de delivery de restaurante utilizando Java e Spring Boot.

@@ -1,44 +1,52 @@
-create table persons(
-
-    id bigint not null auto_increment,
-    name varchar(255) not null,
-    date_birth varchar(255) not null,
-
-    primary key(id)
-
+CREATE TABLE users (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    login VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
 );
 
-create table address(
-
-
-    id bigint not null auto_increment,
-    street varchar(255) not null,
-    zip varchar(9) not null,
-    number varchar(20) not null,
-    city varchar(255) not null,
-    main_address boolean,
-    person_id bigint not null,
-
-    primary key(id),
-    foreign key (person_id) references persons(id)
-
+CREATE TABLE customers (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    PRIMARY KEY (id)
 );
 
-create table users(
-
-    id bigint not null auto_increment,
-    login varchar(255) not null,
-    password varchar(255) not null,
-
-    primary key(id)
-
+CREATE TABLE orders (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    customer_id BIGINT NOT NULL,
+    order_date TIMESTAMP NOT NULL,
+    total_amount DECIMAL(10, 2) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
 );
 
-create table persons_address(
-
-    person_id bigint not null,
-    address_id bigint not null
-
+CREATE TABLE deliveries (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    order_id BIGINT NOT NULL,
+    delivery_date TIMESTAMP NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (order_id) REFERENCES orders(id)
 );
 
-insert into users values (1, 'yoleihu', '$2a$10$Y50UaMFOxteibQEYLrwuHeehHYfcoafCopUazP12.rqB41bsolF5.');
+-- Inserção de usuários
+INSERT INTO users (login, password) VALUES
+    ('usuario1', 'senha1'),
+    ('usuario2', 'senha2');
+
+-- Inserção de clientes
+INSERT INTO customers (name, email, phone) VALUES
+    ('Cliente 1', 'cliente1@example.com', '1234567890'),
+    ('Cliente 2', 'cliente2@example.com', '9876543210');
+
+-- Inserção de pedidos
+INSERT INTO orders (customer_id, order_date, total_amount) VALUES
+    (1, '2023-05-28 10:00:00', 50.00),
+    (2, '2023-05-29 12:30:00', 80.00);
+
+-- Inserção de entregas
+INSERT INTO deliveries (order_id, delivery_date, status) VALUES
+    (1, '2023-05-28 14:00:00', 'Em andamento'),
+    (2, '2023-05-29 15:00:00', 'Entregue');
